@@ -44,7 +44,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int INFO_CODE = -1;
+    private static final int INFO_CODE = 1;
     private List<Function> functions;
     private boolean Debug = false;
     private int resultSystemInfo;
@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     private TextView iconText;
+    private int Pass = 1;
+    private int Fail = 0;
     //    String functions [] = null;
 
     @Override
@@ -75,8 +77,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler);
         recyclerView.setHasFixedSize(true);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 6)); //設定Layout型態
         //adapter
 //        FunctionAdapter adapter = new FunctionAdapter(this);
         IconAdapter adapter = new IconAdapter();
@@ -146,12 +147,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void itemClick(Function function) {
-        Log.d(TAG, "itemClick:" + function.getName());
+        Log.d(TAG, "itemClick:"  + "\t" + function.getName());
         switch (function.getIcon()) {
             case R.drawable.func_info:
                 Intent info = new Intent(this, InfoActivity.class);
-                startActivityForResult(info, INFO_CODE);
-                Log.d(TAG, "itemClick: INFO_CODE" + "\t" + INFO_CODE);
+                startActivityForResult(info, 0);
                 break;
             case R.drawable.func_rtc:
                 Intent rtc = new Intent(this, RtcActivity.class);
@@ -228,20 +228,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "onActivityResult: requestCode:" + "---------" + requestCode);
+        Log.d(TAG, "onActivityResult: requestCode:" + "---------" + "\t" + requestCode);
 
         iconText = findViewById(R.id.item_name);
 
         switch (requestCode) {
             case 0:
-                Function function = new Function();
-                String s = function.getName();
-                s.equals("System Info");
+//                Function function = new Function();
+//                String s = function.getName();
+//                s.equals("System Info");
                 resultSystemInfo = data.getExtras().getInt("resultSystemInfo");
-                if (requestCode == 1){
-                    if (resultSystemInfo == RESULT_OK){
+                if (requestCode == 0){
+                    if (resultSystemInfo == Pass){
                         iconText.setTextColor(Color.rgb(0,255,0));
-                    }else if (resultSystemInfo == 0){
+                    }else if (resultSystemInfo == Fail){
                         iconText.setTextColor(Color.rgb(255,0,0));
                     }
                 }
