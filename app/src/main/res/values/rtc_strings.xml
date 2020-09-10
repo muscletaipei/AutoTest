@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_rtc_btn">[-]RTC</string>
+    <string name="str_group_rtc_btn">RTC</string>
+    <string name="str_rtc_btn_pass">[O]RTC</string>
+    <string name="str_rtc_btn_fail">[X]RTC</string>
+    <string name="str_rtc_test">RTC Time Test</string>
+    <string name="str_stop">Stop</string>
+</resources>

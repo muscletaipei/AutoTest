@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="functions">
+        <item>System Info</item>
+        <item>RTC</item>
+        <item>CPU Temp</item>
+        <item>Battery</item>
+        <item>eMMC</item>
+        <item>SD</item>
+        <item>USB</item>
+        <item>Wi-Fi</item>
+        <item>BT</item>
+        <item>4G</item>
+        <item>Touch</item>
+        <item>Camera</item>
+        <item>Reboot Test</item>
+        <item>Auto Run</item>
+        <item>Logfile</item>
+        <item>exit</item>
+    </string-array>
+</resources>

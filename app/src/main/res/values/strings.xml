@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">AutoTest</string>
+
+    <string name="title_activity_main">Auto Test</string>
+    <string name="text_connecting">Connecting ...</string>
+    <string name="str_page_up_btn">page\nup</string>
+    <string name="str_page_down_btn">page\ndown</string>
+    <string name="title_activity_burn_in">Burn-in</string>
+    <string name="str_output_btn">Output</string>
+    <string name="str_run_btn">Run</string>
+
+
+</resources>
