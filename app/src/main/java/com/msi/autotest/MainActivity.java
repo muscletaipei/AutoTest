@@ -44,7 +44,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final int INFO_CODE = 1;
+//    private static final int INFO_CODE = 100;
     private List<Function> functions;
     private boolean Debug = false;
     private int resultSystemInfo;
@@ -52,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Context context;
     private TextView iconText;
-    private int Pass = 1;
-    private int Fail = 0;
+    private int Pass = 0;
+    private int Fail = -1;
     //    String functions [] = null;
 
     @Override
@@ -229,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, "onActivityResult: requestCode:" + "---------" + "\t" + requestCode);
+        Log.d(TAG, "onActivityResult: resultCode:" + "---------" + "\t" + resultCode);
 
         iconText = findViewById(R.id.item_name);
 
@@ -237,11 +238,15 @@ public class MainActivity extends AppCompatActivity {
 //                Function function = new Function();
 //                String s = function.getName();
 //                s.equals("System Info");
-                resultSystemInfo = data.getExtras().getInt("resultSystemInfo");
+                resultSystemInfo = data.getExtras().getInt("Pass");
+                Log.d(TAG, "resultSystemInfo = ------------------------ \t" + resultSystemInfo);
                 if (requestCode == 0){
-                    if (resultSystemInfo == Pass){
-                        iconText.setTextColor(Color.rgb(0,255,0));
-                    }else if (resultSystemInfo == Fail){
+                    if (resultSystemInfo == 1 ){
+                        Log.d(TAG, "resultSystemInfo -----------------------pass\t" + resultSystemInfo);
+                        iconText.setTextColor(Color.rgb(0,0,255));
+                    }else if (resultSystemInfo == 0 ){
+                        Log.d(TAG, "resultSystemInfo -----------------------fail\t" + resultSystemInfo);
+
                         iconText.setTextColor(Color.rgb(255,0,0));
                     }
                 }

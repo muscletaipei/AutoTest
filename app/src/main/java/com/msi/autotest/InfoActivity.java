@@ -25,20 +25,25 @@ import com.msi.android.SysMgr;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.concurrent.BlockingDeque;
 
 public class InfoActivity extends AppCompatActivity {
 
     private static final String TAG = InfoActivity.class.getSimpleName();
-    private static final int INFO_CODE_FROM = 1;
+    private static final int INFO_CODE_FROM = 100;
     private Button stop_btn;
     private TextView mTextResult;
+    private TextView mTextTitle;
 
-    private Intent intent;
-    private Bundle bundle;
-    private int result= -1;
+    private int result = -1;
+
     private String mTestInfo = "";
-    private InfoActivity mThis;
     private boolean Debug = false;
+    private String m_version = "DUO-6.2.2_07-17-2020";
+    private String os_version = "9";
+
+
+    private SpannableString fail_mesg = new SpannableString( " Fail !");
 
 
     @Override
@@ -54,11 +59,10 @@ public class InfoActivity extends AppCompatActivity {
         String title = "Auto_Test_" + getCurrentVersion("com.msi.autotest");
         this.setTitle(title);
 
-        intent = getIntent();
-        bundle = new Bundle();
-        return_main(result);
 
         mTextResult = findViewById(R.id.TestResult);
+        mTextTitle = (TextView) findViewById(R.id.TestResultTitle);
+
         stop_btn = findViewById(R.id.stop_btn);
         stop_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +91,12 @@ public class InfoActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mHandler.removeMessages(0);
+        mHandler.removeMessages(1);
+    }
 
     @Override
     protected void onResume() {
@@ -99,7 +109,8 @@ public class InfoActivity extends AppCompatActivity {
         super.onStart();
         Message msg = mHandler.obtainMessage(0);
         mHandler.removeMessages(0);
-        mHandler.sendMessageDelayed(msg, 1000);
+        mHandler.sendMessageDelayed(msg, 2000);
+
 
     }
 
@@ -109,11 +120,36 @@ public class InfoActivity extends AppCompatActivity {
         Log.d(TAG, "onBackPressed----------");
     }
 
-    private void return_main(int result){
-        bundle.putInt("resultSystemInfo",result);
-        intent.putExtras(bundle);
-        setResult(0,intent);
-        Log.d(TAG,"return_main: resultSystemInfo" + intent + "........."  + "\t" + result);
+
+    private void callpass() {
+        mTextResult.append("\n\nTest "+ mTestInfo +" Pass!");
+        mTextTitle.setText(mTestInfo +" Pass!");
+        Intent intent2 = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putInt(mTestInfo + "Pass", result);
+        Log.d(TAG, "callpass: " + result);
+
+        intent2.putExtras(bundle);
+        setResult(Activity.RESULT_OK, intent2);
+        finish();
+
+    }
+
+    private void callfail() {
+        mTextResult.append("\n\nTest "+ mTestInfo +" Fail!");
+        mTextTitle.setText(mTestInfo +" Fail!");
+
+        Intent intent2 = new Intent();
+        Bundle bundle = new Bundle();
+        bundle.putInt(mTestInfo + "Pass", result);
+        Log.d(TAG, "callfail: " + result);
+
+        intent2.putExtras(bundle);
+        setResult(Activity.RESULT_OK, intent2);
+        Message msg = mHandler.obtainMessage(1);
+        mHandler.removeMessages(1);
+        mHandler.sendMessageDelayed(msg, 2*1000);
+
     }
 
     private Handler mHandler = new Handler(){
@@ -122,17 +158,43 @@ public class InfoActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 0:
-                    String sdk_version = Build.VERSION.RELEASE;
-                    mTextResult.append("Android version: "+ sdk_version);
-                    if(sdk_version.equals("9")){
-                        mTextResult.append("------Pass.\n");
-                    }else{
-                        mTextResult.append("------Fail.\n");
+
+                    boolean is_error = false;
+
+                    String real_version = Build.DISPLAY;
+                    if (m_version.equals(real_version)) {
+                        mTextResult.append(" OS version = " + real_version + "\t" + " ==> PASS !\n");
+                    } else {
+                        mTextResult.append(" OS version ( real , conf ) = " + "( " + real_version + " , " + m_version + " )" + " ==>" + fail_mesg + "\n");
+                        is_error = true;
                     }
+
+
+                    String sdk_version = Build.VERSION.RELEASE;
+                    mTextResult.append("Android version = "+ sdk_version + "\t");
+                    if(sdk_version.equals(os_version)){
+                        mTextResult.append("==> PASS\n");
+                    }else{
+                        mTextResult.append("==> Fail.\n");
+                        is_error = true;
+                    }
+
+                    Log.d(TAG, "is_error----------" + is_error);
+                    if (!is_error) {
+                        result = 1;
+                        callpass();
+                    } else {
+                        result = 0;
+                        callfail();
+                    }
+                    break;
+                case 1:
+                    finish();
+                    break;
                 default:
                     break;
             }
         }
     };
-    
+
 }

@@ -44,6 +44,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug{
+            signingConfig signingConfigs.key
+        }
     }
     //apk_name
     android.applicationVariants.all { variant ->
@@ -51,9 +54,22 @@ android {
             outputFileName = "AutoTest-${variant.versionName}_${releaseTime()}.apk"
         }
     }
+    productFlavors {
+    }
+    //====for jni=================
+//    externalNativeBuild {
+//        ndkBuild {
+//            path 'src/main/jni/Android.mk'
+//        }
+//    }
+    ndkVersion '21.3.6528147'
+    //============================
 }
 
 dependencies {
+//    implementation files('libs\\layoutlib.jar')
+    implementation files('libs\\msi-ms5761-android9.jar')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
