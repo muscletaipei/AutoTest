@@ -3,6 +3,7 @@
     <string-array name="functions">
         <item>System Info</item>
         <item>RTC</item>
+        <item>Memory</item>
         <item>CPU Temp</item>
         <item>Battery</item>
         <item>eMMC</item>

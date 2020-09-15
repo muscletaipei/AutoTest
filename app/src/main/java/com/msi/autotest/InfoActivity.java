@@ -42,9 +42,7 @@ public class InfoActivity extends AppCompatActivity {
     private String m_version = "DUO-6.2.2_07-17-2020";
     private String os_version = "9";
 
-
     private SpannableString fail_mesg = new SpannableString( " Fail !");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +56,6 @@ public class InfoActivity extends AppCompatActivity {
         //設置標題欄
         String title = "Auto_Test_" + getCurrentVersion("com.msi.autotest");
         this.setTitle(title);
-
 
         mTextResult = findViewById(R.id.TestResult);
         mTextTitle = (TextView) findViewById(R.id.TestResultTitle);
@@ -111,7 +108,6 @@ public class InfoActivity extends AppCompatActivity {
         mHandler.removeMessages(0);
         mHandler.sendMessageDelayed(msg, 2000);
 
-
     }
 
     @Override
@@ -122,6 +118,7 @@ public class InfoActivity extends AppCompatActivity {
 
 
     private void callpass() {
+//        writeLog(mTestInfo, mTextResult.getText().toString(), mTestInfo+".log");
         mTextResult.append("\n\nTest "+ mTestInfo +" Pass!");
         mTextTitle.setText(mTestInfo +" Pass!");
         Intent intent2 = new Intent();
@@ -138,6 +135,7 @@ public class InfoActivity extends AppCompatActivity {
     private void callfail() {
         mTextResult.append("\n\nTest "+ mTestInfo +" Fail!");
         mTextTitle.setText(mTestInfo +" Fail!");
+//        writeLog(mTestInfo,mTextResult.getText().toString(),mTestInfo+"_fail.log");
 
         Intent intent2 = new Intent();
         Bundle bundle = new Bundle();
@@ -151,6 +149,16 @@ public class InfoActivity extends AppCompatActivity {
         mHandler.sendMessageDelayed(msg, 2*1000);
 
     }
+//    private void writeLog(String function, String reason, String file_name) {
+//        Log.d(TAG, "writeLog------------");
+//        RecordFailReason re = new RecordFailReason(function,reason);
+//        try {
+//            re.Write(file_name,reason);//function+"_fail.log"
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 
     private Handler mHandler = new Handler(){
         @Override
@@ -158,7 +166,6 @@ public class InfoActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 0:
-
                     boolean is_error = false;
 
                     String real_version = Build.DISPLAY;
@@ -168,7 +175,6 @@ public class InfoActivity extends AppCompatActivity {
                         mTextResult.append(" OS version ( real , conf ) = " + "( " + real_version + " , " + m_version + " )" + " ==>" + fail_mesg + "\n");
                         is_error = true;
                     }
-
 
                     String sdk_version = Build.VERSION.RELEASE;
                     mTextResult.append("Android version = "+ sdk_version + "\t");

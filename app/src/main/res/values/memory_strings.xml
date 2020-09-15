@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_memory_btn">[-]Memory</string>
+    <string name="str_group_memory_btn">Memory</string>
+    <string name="str_memory_btn_pass">[O]Memory</string>
+    <string name="str_memory_btn_fail">[X]Memory</string>
+    <string name="str_memory_test">Memory Test</string>
+    <string name="str_memory_start">Please wait for read and write Memory test 10 sec...</string>
+    <string name="str_memory_size">Memory : </string>
+    <string name="str_memory_size_unit">kB</string>
+    <string name="memory_size_fail">Memory size is not in range</string>
+    <string name="memory_size_pass">PASS !</string>
+    <string name="memory_size_large">Memory size is too large</string>
+    <string name="memory_size_small">Memory size is too small</string>
+</resources>

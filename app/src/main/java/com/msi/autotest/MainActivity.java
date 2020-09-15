@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 //    private static final int INFO_CODE = 100;
     private List<Function> functions;
     private boolean Debug = false;
-    private int resultSystemInfo;
+    private int resultSystemInfo, resultMemory;
     File resultFile = new File(Environment.getExternalStorageDirectory(), "/Download/Auto_Test_Result.txt");
 
     private Context context;
@@ -90,20 +90,21 @@ public class MainActivity extends AppCompatActivity {
         String[] funcs = getResources().getStringArray(R.array.functions);
         functions.add(new Function(funcs[0], R.drawable.func_info));
         functions.add(new Function(funcs[1], R.drawable.func_rtc));
-        functions.add(new Function(funcs[2], R.drawable.func_temperature));
-        functions.add(new Function(funcs[3], R.drawable.func_battery));
-        functions.add(new Function(funcs[4], R.drawable.func_emmc));
-        functions.add(new Function(funcs[5], R.drawable.func_sd));
-        functions.add(new Function(funcs[6], R.drawable.func_usb));
-        functions.add(new Function(funcs[7], R.drawable.func_wifi));
-        functions.add(new Function(funcs[8], R.drawable.func_bluetooth));
-        functions.add(new Function(funcs[9], R.drawable.func_fourg));
-        functions.add(new Function(funcs[10], R.drawable.func_touch));
-        functions.add(new Function(funcs[11], R.drawable.func_camera));
-        functions.add(new Function(funcs[12], R.drawable.func_reboot1));
-        functions.add(new Function(funcs[13], R.drawable.func_run));
-        functions.add(new Function(funcs[14], R.drawable.func_log));
-        functions.add(new Function(funcs[15], R.drawable.func_exit));
+        functions.add(new Function(funcs[2], R.drawable.func_memory));
+        functions.add(new Function(funcs[3], R.drawable.func_temperature));
+        functions.add(new Function(funcs[4], R.drawable.func_battery));
+        functions.add(new Function(funcs[5], R.drawable.func_emmc));
+        functions.add(new Function(funcs[6], R.drawable.func_sd));
+        functions.add(new Function(funcs[7], R.drawable.func_usb));
+        functions.add(new Function(funcs[8], R.drawable.func_wifi));
+        functions.add(new Function(funcs[9], R.drawable.func_bluetooth));
+        functions.add(new Function(funcs[10], R.drawable.func_fourg));
+        functions.add(new Function(funcs[11], R.drawable.func_touch));
+        functions.add(new Function(funcs[12], R.drawable.func_camera));
+        functions.add(new Function(funcs[13], R.drawable.func_reboot1));
+        functions.add(new Function(funcs[14], R.drawable.func_run));
+        functions.add(new Function(funcs[15], R.drawable.func_log));
+        functions.add(new Function(funcs[16], R.drawable.func_exit));
 
 
     }
@@ -155,7 +156,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.drawable.func_rtc:
                 Intent rtc = new Intent(this, RtcActivity.class);
-                startActivity(rtc);
+                startActivityForResult(rtc,1);
+                break;
+            case R.drawable.func_memory:
+                Intent memory = new Intent(this, MemoryActivity.class);
+                startActivityForResult(memory, 2);
                 break;
             case R.drawable.func_temperature:
                 break;
@@ -235,18 +240,30 @@ public class MainActivity extends AppCompatActivity {
 
         switch (requestCode) {
             case 0:
-//                Function function = new Function();
-//                String s = function.getName();
-//                s.equals("System Info");
                 resultSystemInfo = data.getExtras().getInt("Pass");
-                Log.d(TAG, "resultSystemInfo = ------------------------ \t" + resultSystemInfo);
+                Log.d(TAG, "resultSystemInfo ------------------------get \t" + resultSystemInfo);
                 if (requestCode == 0){
                     if (resultSystemInfo == 1 ){
                         Log.d(TAG, "resultSystemInfo -----------------------pass\t" + resultSystemInfo);
                         iconText.setTextColor(Color.rgb(0,0,255));
                     }else if (resultSystemInfo == 0 ){
                         Log.d(TAG, "resultSystemInfo -----------------------fail\t" + resultSystemInfo);
+                        iconText.setTextColor(Color.rgb(255,0,0));
+                    }
+                }
+                break;
+            case 1:
 
+                break;
+            case 2:
+                resultMemory = data.getExtras().getInt("MemoryResult");
+                Log.d(TAG, "MemoryResult ------------------------get \t" + resultMemory);
+                if (requestCode == 2){
+                    if (resultMemory == 1 ){
+                        Log.d(TAG, "MemoryResult -----------------------pass\t" + resultMemory);
+                        iconText.setTextColor(Color.rgb(0,0,255));
+                    }else if (resultMemory == 0 ){
+                        Log.d(TAG, "MemoryResult -----------------------fail\t" + resultMemory);
                         iconText.setTextColor(Color.rgb(255,0,0));
                     }
                 }
