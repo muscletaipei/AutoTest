@@ -3,6 +3,7 @@ package com.msi.autotest;
 public class Function {
     String name;
     int icon;
+    int status = -1;
 
     public Function() {
     }
@@ -30,5 +31,13 @@ public class Function {
 
     public void setIcon(int icon) {
         this.icon = icon;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getStatus() {
+        return status;
     }
 }

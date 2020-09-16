@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 //    private static final int INFO_CODE = 100;
     private List<Function> functions;
     private boolean Debug = false;
-    private int resultSystemInfo, resultMemory;
+    private int resultSystemInfo, resultMemory, resultRtc;
     File resultFile = new File(Environment.getExternalStorageDirectory(), "/Download/Auto_Test_Result.txt");
 
     private Context context;
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private int Pass = 0;
     private int Fail = -1;
     //    String functions [] = null;
+    private IconAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 6)); //設定Layout型態
         //adapter
 //        FunctionAdapter adapter = new FunctionAdapter(this);
-        IconAdapter adapter = new IconAdapter();
+        adapter = new IconAdapter();
         recyclerView.setAdapter(adapter);
 
     }
@@ -128,6 +129,14 @@ public class MainActivity extends AppCompatActivity {
                     itemClick(function);
                 }
             });
+            // 判斷iconText Pass or Fail
+            if(function.getStatus() == 0) {
+                holder.iconText.setTextColor(Color.rgb(255,0,0));
+            } else if(function.getStatus() == 1) {
+                holder.iconText.setTextColor(Color.rgb(0,0,255));
+            } else {
+                holder.iconText.setTextColor(Color.rgb(0,0,0));
+            }
         }
 
         @Override
@@ -243,29 +252,32 @@ public class MainActivity extends AppCompatActivity {
                 resultSystemInfo = data.getExtras().getInt("Pass");
                 Log.d(TAG, "resultSystemInfo ------------------------get \t" + resultSystemInfo);
                 if (requestCode == 0){
-                    if (resultSystemInfo == 1 ){
-                        Log.d(TAG, "resultSystemInfo -----------------------pass\t" + resultSystemInfo);
-                        iconText.setTextColor(Color.rgb(0,0,255));
-                    }else if (resultSystemInfo == 0 ){
-                        Log.d(TAG, "resultSystemInfo -----------------------fail\t" + resultSystemInfo);
-                        iconText.setTextColor(Color.rgb(255,0,0));
-                    }
+                    functions.get(0).setStatus(resultSystemInfo); // directly point to an icon
+                    adapter.notifyDataSetChanged(); //renew status
                 }
                 break;
             case 1:
-
+                resultRtc = data.getExtras().getInt("RTCResult");
+                Log.d(TAG, "resultRtc ---------------------get \t " + resultRtc);
+                if (requestCode == 1){
+                    functions.get(1).setStatus(resultRtc);
+                    adapter.notifyDataSetChanged();
+                }
                 break;
             case 2:
                 resultMemory = data.getExtras().getInt("MemoryResult");
                 Log.d(TAG, "MemoryResult ------------------------get \t" + resultMemory);
                 if (requestCode == 2){
-                    if (resultMemory == 1 ){
+                    functions.get(2).setStatus(resultMemory);
+                    adapter.notifyDataSetChanged();
+
+                    /*if (resultMemory == 1 ){
                         Log.d(TAG, "MemoryResult -----------------------pass\t" + resultMemory);
                         iconText.setTextColor(Color.rgb(0,0,255));
                     }else if (resultMemory == 0 ){
                         Log.d(TAG, "MemoryResult -----------------------fail\t" + resultMemory);
                         iconText.setTextColor(Color.rgb(255,0,0));
-                    }
+                    }*/
                 }
                 break;
         }
