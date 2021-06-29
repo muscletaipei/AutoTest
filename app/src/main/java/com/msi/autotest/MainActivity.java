@@ -26,6 +26,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,11 +39,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -47,11 +58,16 @@ public class MainActivity extends AppCompatActivity {
 //    private static final int INFO_CODE = 100;
     private List<Function> functions;
     private boolean Debug = false;
-    private int resultSystemInfo, resultMemory, resultRtc;
+    private int resultSystemInfo, resultMemory, resultRtc, resultCPUTemp, resultBattery, resultEmmc;
     File resultFile = new File(Environment.getExternalStorageDirectory(), "/Download/Auto_Test_Result.txt");
 
     private Context context;
     private TextView iconText;
+
+    private String build_ver="";
+    private String diag_ver="";
+    private String mcu_ver="";
+
     private int Pass = 0;
     private int Fail = -1;
     //    String functions [] = null;
@@ -163,19 +179,25 @@ public class MainActivity extends AppCompatActivity {
                 Intent info = new Intent(this, InfoActivity.class);
                 startActivityForResult(info, 0);
                 break;
-            case R.drawable.func_rtc:
-                Intent rtc = new Intent(this, RtcActivity.class);
-                startActivityForResult(rtc,1);
-                break;
+//            case R.drawable.func_rtc:
+//                Intent rtc = new Intent(this, RtcActivity.class);
+//                startActivityForResult(rtc,1);
+//                break;
             case R.drawable.func_memory:
                 Intent memory = new Intent(this, MemoryActivity.class);
                 startActivityForResult(memory, 2);
                 break;
             case R.drawable.func_temperature:
+                Intent temp = new Intent(this, TempActivity.class);
+                startActivityForResult(temp, 3);
                 break;
             case R.drawable.func_battery:
+                Intent battery = new Intent(this, BatteryActivity.class);
+                startActivityForResult(battery, 4);
                 break;
             case R.drawable.func_emmc:
+                Intent emmc = new Intent(this, EmmcActivity.class);
+                startActivityForResult(emmc, 5);
                 break;
             case R.drawable.func_sd:
                 break;
@@ -221,24 +243,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private String getCurrentVersion(String packageName) {
-        try {
-            PackageManager packageManager = getPackageManager();
-            try {
-                PackageInfo info = packageManager.getPackageInfo(packageName, 0);
-                if (Debug) {
-                    Log.d(TAG, "Version:" + info.versionName);
-                }
-                return info.versionName;
-            } catch (PackageManager.NameNotFoundException e) {
-                return "unknown !";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "unknown !";
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -270,16 +274,53 @@ public class MainActivity extends AppCompatActivity {
                 if (requestCode == 2){
                     functions.get(2).setStatus(resultMemory);
                     adapter.notifyDataSetChanged();
-
-                    /*if (resultMemory == 1 ){
-                        Log.d(TAG, "MemoryResult -----------------------pass\t" + resultMemory);
-                        iconText.setTextColor(Color.rgb(0,0,255));
-                    }else if (resultMemory == 0 ){
-                        Log.d(TAG, "MemoryResult -----------------------fail\t" + resultMemory);
-                        iconText.setTextColor(Color.rgb(255,0,0));
-                    }*/
+                }
+                break;
+            case 3:
+                resultCPUTemp = data.getExtras().getInt("CPUTempResult");
+                Log.d(TAG, "TempResult ------------------------get \t" + resultCPUTemp);
+                if (requestCode == 3){
+                    functions.get(3).setStatus(resultCPUTemp);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            case 4:
+                resultBattery = data.getExtras().getInt("BatteryPass");
+                Log.d(TAG, "BatteryResult ------------------------get \t" + resultBattery);
+                if (requestCode == 4){
+                    functions.get(4).setStatus(resultBattery);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            case 5:
+                resultEmmc = data.getExtras().getInt("eMMCResult");
+                Log.d(TAG, "resultEmmc ------------------------get \t" + resultEmmc);
+                if (requestCode == 5){
+                    functions.get(5).setStatus(resultEmmc);
+                    adapter.notifyDataSetChanged();
                 }
                 break;
         }
     }
+
+
+    private String getCurrentVersion(String packageName) {
+        try {
+            PackageManager packageManager = getPackageManager();
+            try {
+                PackageInfo info = packageManager.getPackageInfo(packageName, 0);
+                if (Debug) {
+                    Log.d(TAG, "Version:" + info.versionName);
+                }
+                return info.versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                return "unknown !";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "unknown !";
+        }
+    }
+
+
 }

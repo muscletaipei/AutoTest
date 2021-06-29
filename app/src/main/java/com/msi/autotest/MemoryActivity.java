@@ -60,24 +60,6 @@ public class MemoryActivity extends AppCompatActivity {
         });
     }
 
-    private String getCurrentVersion(String packageName) {
-        try {
-            PackageManager packageManager = getPackageManager();
-            try {
-                PackageInfo info = packageManager.getPackageInfo(packageName, 0);
-                if(Debug) {
-                    Log.d(TAG, "Version:" + info.versionName);
-                }
-                return info.versionName;
-            } catch (PackageManager.NameNotFoundException e) {
-                return  "unknown !";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return  "unknown !";
-        }
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -134,6 +116,7 @@ public class MemoryActivity extends AppCompatActivity {
             }
         }
     };
+
     private void callpass() {
 //        writeLog(mTestInfo, mTextResult.getText().toString(), mTestInfo+".log");
         mTextResult.append("\n\nTest "+ mTestMemory +" Pass!");
@@ -148,7 +131,6 @@ public class MemoryActivity extends AppCompatActivity {
         finish();
 
     }
-
     private void callfail() {
         mTextResult.append("\n\nTest "+ mTestMemory +" Fail!");
         mTextTitle.setText(mTestMemory +" Fail!");
@@ -216,6 +198,7 @@ public class MemoryActivity extends AppCompatActivity {
         mTextResult.append("\n"+ls_return);
         return false;
     }
+
     private String cmd_exec(String ls_cmd) {
         String ls_return = "";
         try {
@@ -237,5 +220,22 @@ public class MemoryActivity extends AppCompatActivity {
 
         }
         return ls_return;
+    }
+    private String getCurrentVersion(String packageName) {
+        try {
+            PackageManager packageManager = getPackageManager();
+            try {
+                PackageInfo info = packageManager.getPackageInfo(packageName, 0);
+                if(Debug) {
+                    Log.d(TAG, "Version:" + info.versionName);
+                }
+                return info.versionName;
+            } catch (PackageManager.NameNotFoundException e) {
+                return  "unknown !";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  "unknown !";
+        }
     }
 }

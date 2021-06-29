@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_eMMC_test">eMMC Test</string>
+    <string name="str_SDCard_test">SD Card Test</string>
+    <string name="str_USB_test">USB Test</string>
+</resources>

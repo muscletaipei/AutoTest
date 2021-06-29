@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="str_cpu_btn">[-]CPU</string>
+    <string name="str_group_cpu_btn">CPU</string>
+    <string name="str_cpu_btn_pass">[O]CPU</string>
+    <string name="str_cpu_btn_fail">[X]CPU</string>
+    <string name="str_cpu_test">CPU Test</string>
+    <string name="str_cpu_start">Please wait for getting CPU information...</string>
+    <string name="str_cpu_temperature">CPU temperature : </string>
+    <string name="str_cpu_temperature_unit">℃</string>
+    <string name="cpu_temp_pass">PASS !</string>
+    <string name="cpu_temp_fail">CPU temperature is not in range</string>
+    <string name="cpu_temp_hight">CPU Temperature is too high</string>
+    <string name="cpu_temp_low">CPU Temperature is too low</string>
+</resources>

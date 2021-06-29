@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="battery_label">Battery</string>
+    <string name="battery_inquiry">Please check the battery status is RIGHT or NOT?</string>
+    <string name="battery_acIn">AC IN:</string>
+    <string name="battery_btry">Battery</string>
+    <string name="battery_percentage">Percentage(%):</string>
+    <string name="battery_voltage">Voltage(mV):</string>
+    
+    <string name="battery_ac_online">ONLINE</string>
+    <string name="battery_ac_offline">OFFLINE</string>
+    <string name="battery_voltage_success">success (current level is %d%%)</string>
+    <string name="battery_voltage_fail">Battery level is not under range (current level is %d%%)</string>
+    <string name="battery_voltage_range">The available range</string>
+    <string name="str_battery_btn">[-]Battery</string>
+    <string name="str_group_battery_btn">Battery</string>
+    <string name="str_battery_btn_pass">[O]Battery</string>
+    <string name="str_battery_btn_fail">[X]Battery</string>
+    <string name="str_battery_test">Battery Test</string>
+    <string name="str_battery_start">Please wait for getting battery information...</string>
+    <string name="str_battery_level">Battery level : </string>
+    <string name="str_battery_temperature">Battery temperature : </string>
+    <string name="str_battery_percentage_unit">%</string>
+    <string name="str_battery_temperature_unit">℃</string>
+</resources>
