@@ -28,8 +28,8 @@ public class TempActivity extends AppCompatActivity {
     private TextView mTextTitle;
     private Button stop_btn;
 
-    private int m_cpu_temp_max = -1;
-    private int m_cpu_temp_min = -1;
+    private int m_cpu_temp_max = 52;
+    private int m_cpu_temp_min = 0;
 
     private int result = -1;
     private String mTestTemp = "";
@@ -152,11 +152,11 @@ public class TempActivity extends AppCompatActivity {
 
     private boolean checkCpuTemp() {
         String ls_return="";
-        String ls_ver = SystemProperties.get("ro.build.version.release","4.4.2");
+        String ls_ver = SystemProperties.get("ro.build.version.release","6.3.3");
         String ls_dev = SystemProperties.get("ro.product.vendor.model","").toLowerCase();
         Log.d("VICTOR", "ls_dev = "+ ls_dev);
         String s = "";
-        if (ls_ver.equals("4.4.2")) {
+        if (ls_ver.equals("6.3.3")) {
             s = SysMgr.nativeSetProp("excuteSystemCmdWithResult","cat /sys/class/thermal/thermal_zone0/temp").trim();
         } else {//4.4.3
             if (ls_dev.equals("ms5761") || ls_dev.equals("ms5761p") || ls_dev.equals("ms5766")) {

@@ -39,7 +39,7 @@ public class InfoActivity extends AppCompatActivity {
 
     private String mTestInfo = "";
     private boolean Debug = false;
-    private String m_version = "DUO-6.2.2_07-17-2020";
+    private String m_version = "DUO-6.3.3_05-21-2021";
     private String os_version = "9";
 
     private SpannableString fail_mesg = new SpannableString( " Fail !");

@@ -29,7 +29,7 @@ public class EmmcActivity extends AppCompatActivity {
     private String mTestEMMC = "";
     private int result = -1;
 
-    private String SDCardPath = "";
+    private String EMMCPath = "";
     private String eMMCPath = "";
     private int totalTimes = 1;
     private int testCounts = 1;
@@ -80,21 +80,21 @@ public class EmmcActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        tvShowCounts.setText("Test counts:");
+        tvShowCounts.setText("Test counts: 3");
         mTextResult.setText("");
-        SDCardPath = Storage.getExternalMounts("SDCard")+"/";
+        EMMCPath = Storage.getExternalMounts("EMMC")+"/";
         if(Debug){
-            Log.d(TAG,"SDCardPath:"+SDCardPath);
+            Log.d(TAG,"EMMCPath:"+EMMCPath);
         }
-        if(SDCardPath.equals("/")){
-            mTextResult.setText("Please insert SD card.");
+        if(EMMCPath.equals("/")){
+            mTextResult.setText("Read and write data to eMMC........");
         }else{
-            parameterFile = new File(SDCardPath+"Parameter.txt");
+            parameterFile = new File(EMMCPath+"Parameter.txt");
             if(!parameterFile.exists()){
                 mTextResult.setText("Please input Parameter.txt file.");
             }else{
                 totalTimes = Integer.parseInt(Storage.readParameter("Test times"));
-                testCounts = 1;
+                testCounts = 3;
                 Message msg = mHandler.obtainMessage(4);
                 mHandler.removeMessages(4);
                 mHandler.sendMessageDelayed(msg, 1000);

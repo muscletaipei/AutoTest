@@ -117,6 +117,8 @@ public class MemoryActivity extends AppCompatActivity {
         }
     };
 
+
+
     private void callpass() {
 //        writeLog(mTestInfo, mTextResult.getText().toString(), mTestInfo+".log");
         mTextResult.append("\n\nTest "+ mTestMemory +" Pass!");

@@ -8,6 +8,7 @@
     <string name="title_activity_burn_in">Burn-in</string>
     <string name="str_output_btn">Output</string>
     <string name="str_run_btn">Run</string>
+    <string name="text_stop">Stop</string>
 
 
 </resources>
