@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 //    private static final int INFO_CODE = 100;
     private List<Function> functions;
     private boolean Debug = false;
-    private int resultSystemInfo, resultMemory, resultRtc, resultCPUTemp, resultBattery, resultEmmc;
+    private int resultSystemInfo, resultMemory, resultRtc, resultCPUTemp, resultBattery, resultEmmc, resultReboot;
     File resultFile = new File(Environment.getExternalStorageDirectory(), "/Download/Auto_Test_Result.txt");
 
     private Context context;
@@ -216,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
             case R.drawable.func_camera:
                 break;
             case R.drawable.func_reboot1:
+                Intent reboot = new Intent(this, RebootActivity.class);
+                startActivityForResult(reboot, 13);
                 break;
             case R.drawable.func_run:
                 break;
@@ -297,6 +299,14 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "resultEmmc ------------------------get \t" + resultEmmc);
                 if (requestCode == 5){
                     functions.get(5).setStatus(resultEmmc);
+                    adapter.notifyDataSetChanged();
+                }
+                break;
+            case 13:
+                resultReboot = data.getExtras().getInt("rebootResult");
+                Log.d(TAG, "resultReboot ------------------------get \t" + resultReboot);
+                if (requestCode == 13){
+                    functions.get(13).setStatus(resultReboot);
                     adapter.notifyDataSetChanged();
                 }
                 break;

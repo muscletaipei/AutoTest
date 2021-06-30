@@ -38,7 +38,12 @@ public class RebootActivity extends AppCompatActivity {
         reboot_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                process = Runtime.getRuntime().exec("reboot");
+                try {
+                    Log.d(TAG,"reboot OnClick");
+                    process = Runtime.getRuntime().exec("reboot");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
